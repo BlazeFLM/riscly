@@ -23,21 +23,10 @@
         ><button class="nav" data-page="reference">Instruction guide</button>
       </nav>
       <div class="header-right">
-        <span class="version"><i></i> RISC-V · RV32I + mul</span
-        ><button class="icon-btn" id="help" aria-label="Open help">?</button>
+<button class="icon-btn" id="help" aria-label="Open help">?</button>
       </div>
     </header>
     <main>
-      <div class="intro">
-        <div>
-          <div class="eyebrow">YOUR IDEAS, DOWN TO THE BITS</div>
-          <h1>Small blocks. Big understanding<span>.</span></h1>
-          <p>Build a program. Peek inside a computer. Make a little magic.</p>
-        </div>
-        <button class="text-btn" id="ideas">
-          What can I build? <span>↗</span>
-        </button>
-      </div>
       <section class="lab" aria-label="RISC-V playground">
         <div class="projectbar">
           <div class="project-title">
@@ -231,26 +220,8 @@
           <div>
             <span id="instruction-total">4 blocks</span
             ><span>32-bit · Little-endian</span
-            ><button id="shortcuts">Keyboard shortcuts <kbd>?</kbd></button>
+            ><button id="ideas">Build ideas</button><button id="shortcuts">Keyboard shortcuts <kbd>?</kbd></button>
           </div>
-        </div>
-      </section>
-      <section class="below">
-        <div class="lesson-callout">
-          <span class="spark">✧</span>
-          <div>
-            <b>Your first “aha!” moment is one step away.</b>
-            <p>
-              Press <strong>Step</strong> to watch one instruction change the
-              computer.
-            </p>
-          </div>
-          <button id="start-lesson">Show me how <span>→</span></button>
-        </div>
-        <div class="footnote">
-          Built for understanding, from the bits up.<span
-            >Inspired by Blockly · Powered by curiosity</span
-          >
         </div>
       </section>
     </main>
@@ -1697,7 +1668,6 @@
           }),
       );
       $("#ideas").onclick = ideas;
-      $("#start-lesson").onclick = lessons;
       $("#help").onclick = lessons;
       $("#computer-help").onclick = () =>
         modal(
