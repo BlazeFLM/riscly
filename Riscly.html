@@ -1202,7 +1202,7 @@
         if (cpu.last?.address !== undefined)
           addresses.add(cpu.last.address & ~3);
         $("#memory").innerHTML =
-          '<div style="font:7px var(--sans);color:#b4a7bf;margin:0 0 7px">4 KiB DATA SANDBOX · BYTE ADDRESSES</div>' +
+          '<div style="font:12px var(--sans);color:#b4a7bf;margin:0 0 7px">4 KiB DATA SANDBOX · BYTE ADDRESSES</div>' +
           [...addresses]
             .sort((a, b) => a - b)
             .map(

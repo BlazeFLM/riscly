@@ -4,8 +4,8 @@
   --ink: #24334b;
   --muted: #54627a;
   --line: #d8deeb;
-  --mono: 'JetBrains Mono',Consolas,monospace;
-  --sans: 'DM Sans',system-ui,sans-serif;
+  --mono: Consolas, "Courier New", monospace;
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -16,7 +16,7 @@ body {
   margin: 0;
   background: #f8f9fc;
   color: var(--ink);
-  font: 13px var(--sans);
+  font: 16px/1.4 var(--sans);
   height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -55,20 +55,20 @@ button:focus-visible,input:focus-visible,select:focus-visible {
 }
 
 .editor-header {
-  height: 64px;
+  height: 68px;
   background: #fff;
   border-bottom: 1px solid var(--line);
   display: flex;
   align-items: center;
   padding: 0 20px;
-  gap: 40px;
+  gap: 28px;
   flex-shrink: 0;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  font-size: 28px;
+  font-size: 35px;
   font-weight: 750;
   letter-spacing: -1.5px;
   gap: 10px;
@@ -83,7 +83,7 @@ button:focus-visible,input:focus-visible,select:focus-visible {
   width: 32px;
   height: 34px;
   justify-content: center;
-  font-size: 30px;
+  font-size: 38px;
   line-height: 29px;
   font-weight: 700;
   letter-spacing: -3px;
@@ -91,7 +91,7 @@ button:focus-visible,input:focus-visible,select:focus-visible {
 }
 
 .brandmark span {
-  font-size: 20px;
+  font-size: 25px;
   color: #536079;
   position: absolute;
   right: 4px;
@@ -99,7 +99,7 @@ button:focus-visible,input:focus-visible,select:focus-visible {
 }
 
 .beta {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 1px;
   background: #f2eefb;
   color: var(--purple);
@@ -120,8 +120,9 @@ nav {
   color: #536079;
   padding: 0;
   font-weight: 550;
-  font-size: 13px;
+  font-size: 16px;
   position: relative;
+  min-height: 44px;
 }
 
 .nav.active {
@@ -140,7 +141,7 @@ nav {
 }
 
 .tiny {
-  font-size: 9px;
+  font-size: 12px;
   color: #536079;
 }
 
@@ -153,7 +154,7 @@ nav {
 
 .version {
   color: #536079;
-  font: 10px var(--mono);
+  font: 12px var(--mono);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -171,10 +172,10 @@ i {
   border: 1px solid var(--line);
   border-radius: 7px;
   background: #fff;
-  width: 29px;
-  height: 29px;
+  width: 40px;
+  height: 40px;
   color: #536079;
-  font-size: 16px;
+  font-size: 22px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -182,9 +183,9 @@ i {
 
 .header-right .icon-btn {
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  font-size: 12px;
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
 }
 
 main {
@@ -207,14 +208,14 @@ main {
 }
 
 .eyebrow {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 1.9px;
   font-weight: 700;
   color: var(--purple);
 }
 
 h1 {
-  font-size: 29px;
+  font-size: 36px;
   font-weight: 650;
   letter-spacing: -1px;
   margin: 9px 0 7px;
@@ -227,13 +228,13 @@ h1 span {
 .intro p {
   color: #536079;
   margin: 0;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .text-btn {
   border: none;
   background: none;
-  font-size: 11px;
+  font-size: 14px;
   color: #536079;
 }
 
@@ -258,7 +259,7 @@ h1 span {
 }
 
 .projectbar {
-  height: 62px;
+  height: 68px;
   border-bottom: 1px solid var(--line);
   display: flex;
   align-items: center;
@@ -271,6 +272,7 @@ h1 span {
   display: flex;
   gap: 11px;
   align-items: center;
+  min-width: 0;
 }
 
 .project-icon {
@@ -281,21 +283,23 @@ h1 span {
   height: 29px;
   display: grid;
   place-items: center;
-  font-size: 17px;
+  font-size: 21px;
 }
 
 .project-title input {
-  font-size: 12px;
+  font-size: 16px;
   border: 0;
   outline: 0;
-  width: 182px;
+  width: 260px;
   font-weight: 600;
   background: transparent;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .saved {
   color: #536079;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .saved:before {
@@ -311,11 +315,12 @@ h1 span {
 }
 
 .project-actions select {
-  font-size: 10px;
+  font-size: 14px;
   color: #536079;
   background: #fff;
   border: 0;
-  max-width: 160px;
+  max-width: 200px;
+  height: 44px;
 }
 
 .button {
@@ -326,15 +331,16 @@ h1 span {
   align-items: center;
   justify-content: center;
   gap: 9px;
-  height: 33px;
-  padding: 0 13px;
-  font-size: 11px;
+  height: auto;
+  padding: 10px 16px;
+  font-size: 15px;
   font-weight: 550;
+  min-height: 44px;
 }
 
 .button.small {
-  height: 29px;
-  font-size: 10px;
+  height: 44px;
+  font-size: 14px;
 }
 
 .button.primary {
@@ -349,7 +355,7 @@ h1 span {
 
 .editor-layout {
   display: grid;
-  grid-template-columns: 235px minmax(360px,1fr) 318px;
+  grid-template-columns: 260px minmax(0, 1fr) 370px;
 
   min-height: 0;
   flex: 1;
@@ -366,7 +372,7 @@ h1 span {
 }
 
 .panel-label {
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
   color: #536079;
   letter-spacing: 1.3px;
@@ -376,7 +382,7 @@ h1 span {
 }
 
 .panel-label>span {
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: .3px;
   background: #f2f0f7;
   border-radius: 4px;
@@ -390,12 +396,13 @@ h1 span {
   gap: 7px;
   border: 1px solid #eeebf3;
   border-radius: 6px;
-  padding: 7px 9px;
+  padding: 10px;
   margin: 15px 0 14px;
+  min-height: 44px;
 }
 
 .search>span {
-  font-size: 20px;
+  font-size: 25px;
   color: #536079;
   line-height: 14px;
 }
@@ -405,7 +412,7 @@ h1 span {
   outline: 0;
   width: 100%;
   min-width: 0;
-  font-size: 10px;
+  font-size: 14px;
   background: transparent;
 }
 
@@ -414,7 +421,7 @@ h1 span {
 }
 
 kbd {
-  font: 9px var(--mono);
+  font: 12px var(--mono);
   background: #f7f6fa;
   border: 1px solid #eeebf3;
   border-radius: 3px;
@@ -437,8 +444,9 @@ kbd {
   color: #536079;
   border-radius: 5px;
   text-align: left;
-  font-size: 10px;
-  padding: 9px 6px;
+  font-size: 14px;
+  padding: 9px 8px;
+  min-height: 44px;
 }
 
 .category .category-dot {
@@ -463,14 +471,16 @@ kbd {
   justify-content: space-between;
   align-items: center;
   margin: 22px 0 13px;
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 650;
   letter-spacing: .8px;
   color: #536079;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .toolbox-heading .tiny {
-  font-size: 6.5px;
+  font-size: 12px;
   letter-spacing: .4px;
 }
 
@@ -491,10 +501,10 @@ kbd {
   background: var(--block);
   width: 100%;
   text-align: left;
-  padding: 11px 10px;
+  padding: 13px 12px;
   margin-bottom: 13px;
   color: #fff;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .palette-block:before,.instruction:before {
@@ -511,20 +521,22 @@ kbd {
 }
 
 .palette-block b {
-  font: 600 12px var(--mono);
+  font: 600 17px var(--mono);
   margin-right: 7px;
 }
 
 .palette-block>span {
-  font-size: 9px;
+  font-size: 14px;
   opacity: 1;
+  display: inline;
 }
 
 .palette-block small {
   display: block;
   margin-top: 6px;
-  font-size: 8px;
+  font-size: 12px;
   opacity: 1;
+  line-height: 1.6;
 }
 
 .toolbox-tip {
@@ -532,13 +544,13 @@ kbd {
   padding-top: 20px;
   display: flex;
   gap: 9px;
-  font-size: 9px;
+  font-size: 12px;
   color: #536079;
 }
 
 .toolbox-tip>span {
   color: var(--purple);
-  font-size: 20px;
+  font-size: 25px;
 }
 
 .toolbox-tip b {
@@ -546,7 +558,7 @@ kbd {
 }
 
 .toolbox-tip p {
-  font-size: 9px;
+  font-size: 12px;
   color: #536079;
   line-height: 1.7;
   margin: 4px 0 0;
@@ -562,7 +574,7 @@ kbd {
 }
 
 .workspace-tabs {
-  height: 48px;
+  height: 58px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -581,16 +593,17 @@ kbd {
 .workspace-tab {
   background: none;
   border: none;
-  font-size: 10px;
+  font-size: 14px;
   padding: 0;
   color: #536079;
   position: relative;
   white-space: nowrap;
+  min-height: 44px;
 }
 
 .workspace-tab span {
   margin-right: 5px;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .workspace-tab.active {
@@ -619,7 +632,9 @@ kbd {
   background: none;
   padding: 2px;
   color: #536079;
-  font-size: 17px;
+  font-size: 22px;
+  width: 36px;
+  height: 40px;
 }
 
 .history>span {
@@ -648,7 +663,7 @@ kbd {
 }
 
 .file-label {
-  font: 10px var(--mono);
+  font: 12px var(--mono);
   color: #536079;
 }
 
@@ -657,7 +672,7 @@ kbd {
 }
 
 .canvas-instruction {
-  font-size: 9px;
+  font-size: 12px;
   color: #536079;
 }
 
@@ -678,24 +693,24 @@ kbd {
   position: absolute;
   left: -27px;
   color: #536079;
-  font: 9px var(--mono);
+  font: 12px var(--mono);
 }
 
 .instruction {
   --block: #7d61c1;
   position: relative;
-  padding: 14px 13px;
+  padding: 14px 16px;
   border-radius: 6px;
   background: var(--block);
   border: 1px solid color-mix(in srgb,var(--block),black 18%);
   box-shadow: 0 2px 0 color-mix(in srgb,var(--block),black 25%);
   color: #fff;
-  font-size: 11px;
+  font-size: 14px;
   display: flex;
-  gap: 7px;
+  gap: 9px;
   align-items: center;
   flex-wrap: wrap;
-  min-height: 47px;
+  min-height: 56px;
   transition: box-shadow .2s,transform .2s;
   max-width: 100%;
   cursor: grab;
@@ -725,43 +740,47 @@ kbd {
   position: absolute;
   left: -48px;
   color: var(--purple);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .program-row.current .instruction {
   box-shadow: 0 0 0 4px #ffda31;
+  min-height: 56px;
+  padding: 14px 16px;
+  gap: 9px;
 }
 
 .instruction .op {
-  font: 600 12px var(--mono);
+  font: 600 18px var(--mono);
   margin-right: 3px;
-  min-width: 24px;
+  min-width: 34px;
 }
 
 .instruction .word {
-  font-size: 10px;
+  font-size: 14px;
   opacity: 1;
 }
 
 .instruction select,.instruction input {
-  font: 10px var(--mono);
+  font: 14px var(--mono);
   color: #24334b;
   background: #fff;
   border: 1px solid #ffffffbd;
   border-radius: 4px;
-  height: 24px;
-  padding: 3px 5px;
-  max-width: 91px;
-  min-width: 44px;
+  height: 36px;
+  padding: 6px 8px;
+  max-width: 126px;
+  min-width: 64px;
+  width: 86px;
 }
 
 .instruction input {
-  width: 57px;
+  width: 86px;
 }
 
 .instruction input.label-input {
-  width: 68px;
-  max-width: 120px;
+  width: 110px;
+  max-width: 150px;
 }
 
 .row-delete {
@@ -769,6 +788,9 @@ kbd {
   background: none;
   color: #536079;
   opacity: 0;
+  font-size: 20px;
+  width: 32px;
+  min-height: 36px;
 }
 
 .program-row:hover .row-delete,.row-delete:focus-visible {
@@ -776,11 +798,12 @@ kbd {
 }
 
 .row-comment {
-  font-size: 9px;
+  font-size: 14px;
   color: #536079;
   position: relative;
   padding-left: 20px;
   margin: 11px 0 24px 25px;
+  line-height: 1.6;
 }
 
 .row-comment:before {
@@ -796,9 +819,9 @@ kbd {
   border-radius: 18px 18px 5px 5px;
   background: #f0eaf5;
   display: inline-flex;
-  padding: 11px 14px;
+  padding: 12px 16px;
   font-weight: 550;
-  font-size: 10px;
+  font-size: 14px;
   margin: 0 0 8px 25px;
   gap: 9px;
 }
@@ -813,8 +836,9 @@ kbd {
   color: #536079;
   background: #ffffff80;
   margin: 18px 0 0 25px;
-  font-size: 9px;
-  padding: 10px 19px;
+  font-size: 14px;
+  padding: 10px 16px;
+  min-height: 44px;
 }
 
 .canvas-watermark {
@@ -822,25 +846,27 @@ kbd {
   bottom: 20px;
   right: 24px;
   color: #536079;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .canvas-watermark span {
   color: #536079;
-  font-size: 16px;
+  font-size: 20px;
   margin-left: 8px;
 }
 
 .execution {
-  height: 66px;
+  height: auto;
   border-top: 1px solid var(--line);
   background: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 19px;
+  padding: 12px 16px;
   gap: 10px;
   flex-shrink: 0;
+  min-height: 76px;
+  flex-wrap: wrap;
 }
 
 .execution-main {
@@ -850,9 +876,10 @@ kbd {
 }
 
 .execution .icon-btn {
-  width: 28px;
+  width: 36px;
   border: none;
   background: #f8f7fa;
+  height: 40px;
 }
 
 .speed {
@@ -860,18 +887,18 @@ kbd {
   align-items: center;
   gap: 7px;
   color: #536079;
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .speed input {
-  width: 48px;
+  width: 70px;
   accent-color: #9878cf;
   height: 3px;
 }
 
 .speed span {
   filter: grayscale(1);
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .inspector {
@@ -883,7 +910,7 @@ kbd {
 }
 
 .inspector-title {
-  height: 48px;
+  height: 58px;
   border-bottom: 1px solid var(--line);
   display: flex;
   align-items: center;
@@ -892,7 +919,7 @@ kbd {
 }
 
 .inspector-title>span {
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 1.2px;
   font-weight: 650;
   color: #536079;
@@ -909,7 +936,9 @@ kbd {
 
 .inspector-title .icon-btn {
   border: 0;
-  font-size: 13px;
+  font-size: 18px;
+  width: 36px;
+  height: 40px;
 }
 
 .pc-row {
@@ -920,19 +949,19 @@ kbd {
 }
 
 .meta {
-  font-size: 7px;
+  font-size: 12px;
   color: #536079;
   letter-spacing: 1px;
 }
 
 .pc-row #pc {
-  font: 14px var(--mono);
+  font: 18px var(--mono);
   margin-top: 7px;
   color: #536079;
 }
 
 .status-chip {
-  font-size: 8px;
+  font-size: 12px;
   color: #536079;
   background: #f5f1f9;
   border: 1px solid #ede6f4;
@@ -945,16 +974,17 @@ kbd {
   gap: 19px;
   border-bottom: 1px solid var(--line);
   padding: 0 17px;
-  height: 34px;
+  height: 44px;
 }
 
 .inspector-tabs button {
   border: 0;
   background: none;
-  font-size: 10px;
+  font-size: 15px;
   padding: 0;
   color: #536079;
   position: relative;
+  min-height: 44px;
 }
 
 .inspector-tabs button.active {
@@ -974,7 +1004,7 @@ kbd {
 
 .inspector-tabs span {
   background: #f4effa;
-  font-size: 7px;
+  font-size: 12px;
   padding: 2px 4px;
   border-radius: 3px;
   margin-left: 5px;
@@ -985,11 +1015,12 @@ kbd {
   justify-content: space-between;
   align-items: center;
   padding: 13px 17px 9px;
-  gap: 4px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .register-controls>span {
-  font-size: 6px;
+  font-size: 12px;
   color: #536079;
   letter-spacing: .5px;
 }
@@ -1005,9 +1036,10 @@ kbd {
 .segmented button {
   border: 0;
   background: none;
-  font: 7px var(--mono);
-  padding: 3px 5px;
+  font: 12px var(--mono);
+  padding: 6px;
   color: #536079;
+  min-height: 32px;
 }
 
 .segmented button.active {
@@ -1022,7 +1054,7 @@ kbd {
   grid-template-columns: 1fr 1fr;
   gap: 5px;
   padding: 0 17px;
-  max-height: 193px;
+  max-height: 248px;
   overflow: auto;
   scrollbar-width: thin;
 }
@@ -1031,18 +1063,18 @@ kbd {
   background: #faf9fc;
   border: 1px solid #efecf4;
   border-radius: 5px;
-  padding: 8px 9px;
+  padding: 10px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   text-align: left;
-  font: 9px var(--mono);
+  font: 14px var(--mono);
   min-width: 0;
-  height: 33px;
+  height: 44px;
 }
 
 .register .alias {
-  font-size: 8px;
+  font-size: 12px;
   color: #536079;
 }
 
@@ -1077,10 +1109,11 @@ kbd {
   display: flex;
   align-items: center;
   padding: 11px 17px;
-  font-size: 6.5px;
+  font-size: 12px;
   color: #536079;
   gap: 5px;
-  white-space: nowrap;
+  white-space: normal;
+  flex-wrap: wrap;
 }
 
 .dot {
@@ -1105,22 +1138,23 @@ kbd {
   justify-content: space-between;
   align-items: center;
   margin: 14px 0 11px;
-  gap: 4px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .bit-title b {
-  font: 11px var(--mono);
+  font: 15px var(--mono);
   color: #536079;
 }
 
 .bit-title b span {
   color: var(--purple);
-  font-size: 9px;
+  font-size: 12px;
   margin-left: 4px;
 }
 
 .bit-title>span {
-  font-size: 7px;
+  font-size: 12px;
   color: #536079;
 }
 
@@ -1134,8 +1168,8 @@ kbd {
   border: 1px solid #e8e0f1;
   background: white;
   border-radius: 3px;
-  font: 8px var(--mono);
-  padding: 4px 0;
+  font: 12px var(--mono);
+  padding: 5px 0;
   color: #536079;
   min-width: 0;
 }
@@ -1154,7 +1188,7 @@ kbd {
   display: flex;
   justify-content: space-between;
   color: #536079;
-  font: 6px var(--mono);
+  font: 11px var(--mono);
   margin: 7px 0 13px;
 }
 
@@ -1170,7 +1204,7 @@ kbd {
   border-radius: 5px;
   padding: 7px 8px;
   color: #536079;
-  font: 6px var(--mono);
+  font: 12px var(--mono);
 }
 
 .representations input {
@@ -1180,39 +1214,42 @@ kbd {
   background: transparent;
   outline: none;
   color: #536079;
-  font: 10px var(--mono);
+  font: 14px var(--mono);
   margin-top: 5px;
 }
 
 .representations label:last-child {
   grid-column: 1/-1;
-  display: flex;
+  display: block;
   gap: 14px;
   align-items: center;
 }
 
 .representations output {
-  font: 8px/1.6 var(--mono);
+  font: 12px/1.6 var(--mono);
   color: #536079;
   word-break: break-all;
 }
 
 .bit-note {
-  font-size: 7px;
+  font-size: 12px;
   color: #536079;
   margin-bottom: 0;
 }
 
 .statusbar {
-  height: 33px;
+  height: auto;
   border-top: 1px solid var(--line);
-  padding: 0 16px;
+  padding: 8px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 8px;
+  font-size: 12px;
   color: #536079;
   flex-shrink: 0;
+  min-height: 44px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .statusbar>span {
@@ -1237,7 +1274,8 @@ kbd {
   border: none;
   background: none;
   color: #536079;
-  font-size: 8px;
+  font-size: 12px;
+  min-height: 32px;
 }
 
 .statusbar kbd {
@@ -1266,18 +1304,18 @@ kbd {
   background: #f9f6fe;
   display: grid;
   place-items: center;
-  font-size: 24px;
+  font-size: 30px;
   color: #536079;
 }
 
 .lesson-callout b {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 550;
   color: #536079;
 }
 
 .lesson-callout p {
-  font-size: 9px;
+  font-size: 12px;
   margin: 5px 0 0;
   color: #536079;
 }
@@ -1294,7 +1332,7 @@ kbd {
   border-radius: 5px;
   padding: 8px 12px;
   color: #536079;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .lesson-callout button span {
@@ -1302,7 +1340,7 @@ kbd {
 }
 
 .footnote {
-  font-size: 8px;
+  font-size: 12px;
   color: #536079;
   margin: 18px 0 0;
   display: flex;
@@ -1316,7 +1354,7 @@ kbd {
   overflow: auto;
 
   min-height: 0;
-  font: 11px/2 var(--mono);
+  font: 15px/1.8 var(--mono);
 }
 
 .code-line {
@@ -1326,6 +1364,7 @@ kbd {
   cursor: pointer;
   border-radius: 4px;
   white-space: pre-wrap;
+  flex-wrap: wrap;
 }
 
 .code-line.active {
@@ -1341,15 +1380,15 @@ kbd {
 }
 
 .code-line .encoding {
-  font-size: 10px;
+  font-size: 13px;
   color: #536079;
 }
 
 .memory {
-  height: 193px;
+  height: 248px;
   overflow: auto;
   padding: 0 17px;
-  font: 9px/2 var(--mono);
+  font: 14px/2 var(--mono);
 }
 
 .memory-row {
@@ -1373,7 +1412,7 @@ kbd {
   color: white;
   padding: 11px 20px;
   border-radius: 8px;
-  font-size: 11px;
+  font-size: 14px;
   opacity: 0;
   pointer-events: none;
   transition: .2s;
@@ -1408,20 +1447,20 @@ dialog::backdrop {
 }
 
 dialog h2 {
-  font-size: 26px;
+  font-size: 32px;
   letter-spacing: -.8px;
   margin: 17px 0;
 }
 
 dialog p {
   color: #536079;
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1.8;
 }
 
 dialog h3 {
   color: #536079;
-  font-size: 13px;
+  font-size: 16px;
   margin-top: 24px;
 }
 
@@ -1443,7 +1482,7 @@ dialog h3 {
 }
 
 .guide-card p {
-  font-size: 10px;
+  font-size: 15px;
   margin: 7px 0;
 }
 
@@ -1454,7 +1493,7 @@ dialog h3 {
 .reference-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .reference-table th,.reference-table td {
@@ -1464,7 +1503,7 @@ dialog h3 {
 }
 
 .reference-table code {
-  font: 10px var(--mono);
+  font: 14px var(--mono);
   color: #536079;
 }
 
@@ -1483,7 +1522,7 @@ dialog h3 {
 .empty {
   padding: 40px 15px;
   color: #536079;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .drag-over {
@@ -1497,7 +1536,7 @@ dialog h3 {
 
 @media (min-width:1450px) {
   .editor-layout {
-    grid-template-columns: 250px minmax(400px,1fr) 340px;
+    grid-template-columns: 280px minmax(0, 1fr) 400px;
   }
   .canvas {
     padding: 30px 40px 60px;
@@ -1506,12 +1545,17 @@ dialog h3 {
     padding-left: 35px;
   }
   .instruction {
-    padding: 16px 16px;
-    font-size: 12px;
-  }
+  padding: 14px 16px;
+    font-size: 15px;
+    min-height: 56px;
+  gap: 9px;
+}
   .register {
-    height: 35px;
-  }
+  height: 44px;
+    font: 14px var(--mono);
+  padding: 10px;
+  gap: 6px;
+}
   .registers {
     max-height: 205px;
   }
@@ -1522,7 +1566,7 @@ dialog h3 {
 
   }
   .canvas-instruction {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 
@@ -1535,16 +1579,22 @@ dialog h3 {
     gap: 40px;
   }
   .editor-layout {
-    grid-template-columns: 205px minmax(320px,1fr) 280px;
+    grid-template-columns: 230px minmax(0, 1fr) 330px;
   }
   .instruction {
-    gap: 5px;
-    padding: 12px 9px;
-  }
+  gap: 9px;
+  padding: 14px 16px;
+    min-height: 56px;
+}
   .instruction select,.instruction input {
-    font-size: 9px;
-    max-width: 76px;
-  }
+    font-size: 12px;
+  max-width: 126px;
+    font: 14px var(--mono);
+  height: 36px;
+  padding: 6px 8px;
+  min-width: 64px;
+  width: 86px;
+}
   .canvas {
     padding: 24px 18px 50px;
   }
@@ -1564,19 +1614,19 @@ dialog h3 {
     gap: 5px;
   }
   .register-controls>span {
-    font-size: 5px;
+    font-size: 12px;
   }
   .editor-header nav {
     gap: 20px;
   }
   .version {
-    font-size: 8px;
+    font-size: 12px;
   }
 }
 
 @media (max-width:930px) {
   .editor-layout {
-    grid-template-columns: 190px minmax(340px,1fr);
+    grid-template-columns: 230px minmax(0, 1fr);
   }
   .inspector {
     grid-column: 1/-1;
@@ -1605,7 +1655,10 @@ dialog h3 {
   }
   .register-note {
     grid-column: 1;
-  }
+    flex-wrap: wrap;
+  white-space: normal;
+  font-size: 12px;
+}
   .bit-inspector {
     grid-column: 2;
     grid-row: 2/7;
@@ -1613,7 +1666,7 @@ dialog h3 {
     border-left: 1px solid var(--line);
   }
   .intro h1 {
-    font-size: 25px;
+    font-size: 31px;
   }
   .version {
     display: none;
@@ -1641,13 +1694,13 @@ dialog h3 {
     gap: 25px;
   }
   .brand {
-    font-size: 25px;
+    font-size: 31px;
     gap: 7px;
   }
   .brandmark {
     height: 29px;
     width: 28px;
-    font-size: 26px;
+    font-size: 32px;
   }
   .beta {
     display: none;
@@ -1656,8 +1709,9 @@ dialog h3 {
     gap: 17px;
   }
   .nav {
-    font-size: 10px;
-  }
+  font-size: 16px;
+    min-height: 44px;
+}
   .header-right {
     display: none;
   }
@@ -1665,20 +1719,20 @@ dialog h3 {
     align-items: flex-start;
   }
   .intro h1 {
-    font-size: 21px;
+    font-size: 26px;
     max-width: 260px;
     line-height: 1.25;
   }
   .intro p {
-    font-size: 10px;
+    font-size: 12px;
     max-width: 270px;
     line-height: 1.7;
   }
   .eyebrow {
-    font-size: 7px;
+    font-size: 12px;
   }
   .text-btn {
-    font-size: 9px;
+    font-size: 12px;
     max-width: 94px;
     text-align: right;
     line-height: 1.8;
@@ -1692,9 +1746,11 @@ dialog h3 {
     gap: 7px;
   }
   .project-title input {
-    width: 145px;
-    font-size: 10px;
-  }
+  width: 260px;
+  font-size: 16px;
+    min-width: 0;
+  max-width: 100%;
+}
   .project-icon {
     display: none;
   }
@@ -1702,71 +1758,79 @@ dialog h3 {
     gap: 5px;
   }
   .project-actions select {
-    font-size: 8px;
+  font-size: 14px;
     width: 95px;
-  }
+    height: 44px;
+  max-width: 200px;
+}
   .button.small {
     padding: 0 7px;
-  }
+    font-size: 14px;
+  height: 44px;
+}
   .button.small span {
     display: none;
   }
   .editor-layout {
-    grid-template-columns: 125px minmax(0,1fr);
+    grid-template-columns: 160px minmax(0, 1fr);
   }
   .toolbox {
     padding: 15px 8px;
   }
   .panel-label {
-    font-size: 7px;
+    font-size: 12px;
     letter-spacing: .6px;
   }
   .categories {
     grid-template-columns: 1fr;
   }
   .category {
-    padding: 7px 5px;
-    font-size: 9px;
-  }
+  padding: 9px 8px;
+  font-size: 14px;
+    min-height: 44px;
+}
   .search {
-    padding: 6px 5px;
+  padding: 10px;
     gap: 4px;
-  }
+    min-height: 44px;
+}
   .search input {
-    font-size: 8px;
+  font-size: 14px;
   }
   .search kbd {
     display: none;
   }
   .toolbox-heading {
     margin: 14px 0 10px;
-    font-size: 6px;
+    font-size: 12px;
   }
   .toolbox-heading .tiny {
     display: none;
   }
   .palette-block {
-    padding: 9px 6px;
+  padding: 13px 12px;
   }
   .palette-block b {
-    font-size: 10px;
-  }
+    font-size: 12px;
+    font: 600 17px var(--mono);
+}
   .palette-block>span {
-    display: none;
-  }
+  display: inline;
+    font-size: 14px;
+}
   .palette-block small {
-    font-size: 7px;
-    line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.6;
   }
   .palette {
 
   }
   .toolbox-tip {
-    font-size: 8px;
+    font-size: 12px;
     gap: 4px;
   }
   .toolbox-tip p {
-    font-size: 7px;
+  font-size: 12px;
   }
   .workspace-tabs {
     padding: 0 8px;
@@ -1776,8 +1840,9 @@ dialog h3 {
     gap: 12px;
   }
   .workspace-tab {
-    font-size: 8px;
-  }
+  font-size: 14px;
+    min-height: 44px;
+}
   .workspace-tab span {
     display: none;
   }
@@ -1798,79 +1863,90 @@ dialog h3 {
   }
   .line-num {
     left: -18px;
-    font-size: 7px;
+    font-size: 12px;
   }
   .start-block {
     margin-left: 15px;
-    font-size: 8px;
-    padding: 9px 10px;
+  font-size: 14px;
+  padding: 12px 16px;
   }
   .instruction {
-    padding: 9px 8px;
-    gap: 5px;
-    min-height: 42px;
+  padding: 14px 16px;
+  gap: 9px;
+  min-height: 56px;
   }
   .instruction .op {
-    font-size: 10px;
-    min-width: 23px;
-  }
+    font-size: 12px;
+  min-width: 34px;
+    font: 600 18px var(--mono);
+}
   .instruction .word {
-    font-size: 8px;
+  font-size: 14px;
   }
   .instruction select,.instruction input {
-    font-size: 9px;
-    height: 23px;
-    padding: 2px;
-    width: auto;
-    max-width: 69px;
-  }
+    font-size: 12px;
+  height: 36px;
+  padding: 6px 8px;
+  width: 86px;
+  max-width: 126px;
+    font: 14px var(--mono);
+  min-width: 64px;
+}
   .instruction input {
-    width: 46px;
+  width: 86px;
   }
   .row-delete {
     position: absolute;
     right: -4px;
     top: -8px;
-    font-size: 11px;
+    font-size: 14px;
   }
   .row-comment {
-    font-size: 7px;
-    line-height: 1.8;
+  font-size: 14px;
+  line-height: 1.6;
     padding-left: 12px;
     margin-left: 16px;
   }
   .canvas-watermark {
-    font-size: 6px;
+    font-size: 12px;
     right: 12px;
   }
   .add-block {
     margin-left: 15px;
-    font-size: 7px;
-    padding: 9px 8px;
-  }
+  font-size: 14px;
+  padding: 10px 16px;
+    min-height: 44px;
+}
   .execution {
-    padding: 0 8px;
-  }
+  padding: 12px 16px;
+    min-height: 76px;
+  height: auto;
+  flex-wrap: wrap;
+}
   .execution-main {
     gap: 4px;
     flex-wrap: wrap;
   }
   .execution .button {
-    padding: 0 8px;
-    font-size: 9px;
+  padding: 10px;
+  font-size: 14px;
     gap: 4px;
-    height: 30px;
-  }
+  height: auto;
+    min-height: 44px;
+}
   .execution .icon-btn {
-    width: 23px;
-    font-size: 13px;
-  }
+  width: 36px;
+    font-size: 16px;
+    height: 40px;
+}
   .statusbar {
-    font-size: 6px;
-    padding: 0 9px;
-    height: 37px;
-    gap: 6px;
-  }
+  font-size: 12px;
+  padding: 8px 16px;
+  height: auto;
+  gap: 10px;
+    min-height: 44px;
+  flex-wrap: wrap;
+}
   .statusbar>div {
     gap: 5px;
   }
@@ -1882,17 +1958,21 @@ dialog h3 {
     gap: 4px;
   }
   .register {
-    padding: 6px;
-    font-size: 8px;
-    gap: 3px;
-  }
+  padding: 10px;
+    font-size: 12px;
+  gap: 6px;
+    height: 44px;
+  font: 14px var(--mono);
+}
   .register .alias {
-    font-size: 6px;
+  font-size: 12px;
   }
   .register-note {
     padding: 10px 9px;
-    font-size: 5px;
-  }
+  font-size: 12px;
+    flex-wrap: wrap;
+  white-space: normal;
+}
   .register-note .lock {
     display: none;
   }
@@ -1908,20 +1988,23 @@ dialog h3 {
     gap: 2px;
   }
   .bit {
-    font-size: 6px;
-    padding: 3px 0;
-  }
+    font-size: 12px;
+  padding: 5px 0;
+    font: 12px var(--mono);
+}
   .bit-ends {
-    font-size: 4px;
-  }
+    font-size: 12px;
+    font: 11px var(--mono);
+}
   .representations {
     gap: 5px;
   }
   .representations input {
-    font-size: 8px;
-  }
+    font-size: 12px;
+    font: 14px var(--mono);
+}
   .representations output {
-    font-size: 6px;
+    font-size: 12px;
   }
   .register-controls {
     padding: 12px 9px 9px;
@@ -1932,10 +2015,10 @@ dialog h3 {
     margin: 14px 10px;
   }
   .pc-row #pc {
-    font-size: 12px;
+    font-size: 15px;
   }
   .status-chip {
-    font-size: 6px;
+    font-size: 12px;
     padding: 4px;
   }
   .inspector-tabs {
@@ -1946,14 +2029,14 @@ dialog h3 {
     gap: 8px;
   }
   .lesson-callout b {
-    font-size: 9px;
+    font-size: 12px;
   }
   .lesson-callout p {
-    font-size: 8px;
+    font-size: 12px;
     line-height: 1.6;
   }
   .lesson-callout button {
-    font-size: 7px;
+    font-size: 12px;
     white-space: nowrap;
     padding: 7px;
   }
@@ -1963,7 +2046,7 @@ dialog h3 {
     height: 29px;
   }
   .footnote {
-    font-size: 6px;
+    font-size: 12px;
     gap: 20px;
   }
   .guide-grid {
@@ -1973,9 +2056,10 @@ dialog h3 {
     padding: 20px;
   }
   .code-view {
-    font-size: 8px;
+    font-size: 12px;
     padding: 15px 5px;
-  }
+    font: 15px/1.8 var(--mono);
+}
   .code-line {
     gap: 8px;
     padding: 3px 2px;
@@ -1983,9 +2067,9 @@ dialog h3 {
 }
 
 .representations label:last-child input {
-  font-size: 8px;
-  margin-top: 0;
-  letter-spacing: .3px;
+  font-size: 12px;
+  margin-top: 6px;
+  letter-spacing: 0;
   min-width: 0;
   width: 100%;
   font-family: var(--mono);
@@ -1993,12 +2077,12 @@ dialog h3 {
 
 @media (max-width:620px) {
   .representations label:last-child {
-    display: block;
+  display: block;
   }
   .representations label:last-child input {
-    margin-top: 6px;
-    font-size: 6px;
-    letter-spacing: 0;
+  margin-top: 6px;
+  font-size: 12px;
+  letter-spacing: 0;
   }
 }
 
@@ -2016,5 +2100,32 @@ dialog h3 {
   }
   .inspector { overflow: visible; }
   .toolbox-tip { flex-shrink: 0; }
-  .statusbar { min-height: 40px; height: auto; }
+  .statusbar {  min-height: 44px; height: auto;   height: auto;
+  font-size: 12px;
+  gap: 10px;
+  padding: 8px 16px;
+  flex-wrap: wrap;
+}
+}
+
+@media (max-width:620px) {
+  .editor-header { height: auto; min-height: 68px; flex-wrap: wrap; gap: 4px 18px; padding: 8px 12px; }
+  .editor-header nav { gap: 14px; flex-wrap: wrap; }
+  .nav { font-size: 14px; }
+  .projectbar { height: auto; min-height: 68px; padding: 10px; flex-wrap: wrap; }
+  .project-title input { width: 100%; }
+  .project-actions { flex-wrap: wrap; }
+  .workspace-tabs { height: auto; min-height: 58px; flex-wrap: wrap; gap: 6px; }
+  .tab-group { flex-wrap: wrap; gap: 8px; }
+  .history { display: flex; }
+  .toolbox { padding: 12px 10px; }
+  .palette-block>span { display: block; margin-top: 4px; }
+  .canvas { padding: 20px 12px 50px; }
+  .instruction { padding: 12px; }
+  .instruction select,.instruction input { max-width: 112px; }
+  .inspector { grid-template-columns: minmax(0, 1fr); }
+  .bit-inspector { grid-column: 1; grid-row: auto; border-left: 0; border-top: 1px solid var(--line); }
+  .register-controls>span { font-size: 12px; }
+  .register-note .lock { display: inline; }
+  .registers { max-height: 248px; }
 }
