@@ -437,31 +437,31 @@
         const r = (n) => "x" + n;
         switch (catalog[b.op].format) {
           case "R":
-            return `${b.op} ${r(b.rd)}, ${r(b.rs1)}, ${r(b.rs2)}`;
+            return `${b.op} ${r(b.rd)} ${r(b.rs1)} ${r(b.rs2)}`;
           case "I":
           case "SHIFT":
-            return `${b.op} ${r(b.rd)}, ${r(b.rs1)}, ${b.imm}`;
+            return `${b.op} ${r(b.rd)} ${r(b.rs1)} ${b.imm}`;
           case "LOAD":
-            return `${b.op} ${r(b.rd)}, ${b.imm}(${r(b.rs1)})`;
+            return `${b.op} ${r(b.rd)} ${b.imm}(${r(b.rs1)})`;
           case "STORE":
-            return `${b.op} ${r(b.rs2)}, ${b.imm}(${r(b.rs1)})`;
+            return `${b.op} ${r(b.rs2)} ${b.imm}(${r(b.rs1)})`;
           case "B":
-            return `${b.op} ${r(b.rs1)}, ${r(b.rs2)}, ${b.target}`;
+            return `${b.op} ${r(b.rs1)} ${r(b.rs2)} ${b.target}`;
           case "J":
-            return `${b.op} ${r(b.rd)}, ${b.target}`;
+            return `${b.op} ${r(b.rd)} ${b.target}`;
           case "U":
           case "LI":
-            return `${b.op} ${r(b.rd)}, ${b.imm}`;
+            return `${b.op} ${r(b.rd)} ${b.imm}`;
           case "MOVE":
-            return `${b.op} ${r(b.rd)}, ${r(b.rs1)}`;
+            return `${b.op} ${r(b.rd)} ${r(b.rs1)}`;
           case "BZ":
-            return `${b.op} ${r(b.rs1)}, ${b.target}`;
+            return `${b.op} ${r(b.rs1)} ${b.target}`;
           case "TARGET":
             return `${b.op} ${b.target}`;
           case "ONE":
             return `${b.op} ${r(b.rs1)}`;
           case "LA":
-            return `${b.op} ${r(b.rd)}, ${b.target}`;
+            return `${b.op} ${r(b.rd)} ${b.target}`;
           case "LABEL":
             return `${b.name}:`;
           default:
