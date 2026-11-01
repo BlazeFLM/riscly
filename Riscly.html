@@ -1381,14 +1381,35 @@
         e.dataTransfer.effectAllowed = "move";
       });
       function dropAnchor(y) {
+        const preview = $("#placement-shadow");
+        const previewRect = preview?.getBoundingClientRect();
+        const occupied = preview ? previewRect.height + parseFloat(getComputedStyle(preview).marginBottom || 0) : 0;
         const rows = [...$("#program").querySelectorAll(".program-row")]
           .filter(row => row.dataset.id !== drag?.id);
         return rows.find(row => {
           const rect = row.getBoundingClientRect();
-          return y < rect.top + rect.height / 2;
+          const top = rect.top - (previewRect && rect.top > previewRect.top ? occupied : 0);
+          return y < top + rect.height / 2;
         })?.dataset.id ?? null;
       }
+      function clearPlacement() {
+        $("#placement-shadow")?.remove();
+      }
+      function showPlacement(y) {
+        const anchor = dropAnchor(y);
+        let shadow = $("#placement-shadow");
+        if (!shadow) {
+          shadow = document.createElement("div");
+          shadow.id = "placement-shadow";
+          shadow.setAttribute("aria-hidden", "true");
+        }
+        const next = anchor ? [...$("#program").querySelectorAll(".program-row")].find(row => row.dataset.id === anchor) : null;
+        if (next) {
+          if (shadow.nextElementSibling !== next) next.before(shadow);
+        } else if ($("#program").lastElementChild !== shadow) $("#program").append(shadow);
+      }
       function finishDrag() {
+        clearPlacement();
         drag = null;
         $("#canvas").classList.remove("drag-over");
         document.querySelectorAll(".dragging").forEach(el => el.classList.remove("dragging"));
@@ -1397,10 +1418,13 @@
         if (!drag) return;
         e.preventDefault();
         $("#canvas").classList.add("drag-over");
+        showPlacement(e.clientY);
       });
       $("#canvas").addEventListener("dragleave", (e) => {
-        if (!$("#canvas").contains(e.relatedTarget))
+        if (!$("#canvas").contains(e.relatedTarget)) {
           $("#canvas").classList.remove("drag-over");
+          clearPlacement();
+        }
       });
       $("#canvas").addEventListener("drop", (e) => {
         if (!drag) return;

@@ -1976,3 +1976,14 @@ dialog h3 {
   clip-path: polygon(0 0,100% 0,100% calc(100% - 6px),44px calc(100% - 6px),40px 100%,22px 100%,18px calc(100% - 6px),0 calc(100% - 6px)); }
 .row-delete { align-self: center; }
 .row-comment { display: none; }
+
+#placement-shadow {
+  height: 56px;
+  max-width: 360px;
+  margin: 0 0 -6px;
+  pointer-events: none;
+  background: #7541d945;
+  border: 2px dashed #7541d9;
+  border-radius: 5px;
+  clip-path: polygon(0 0,18px 0,22px 6px,40px 6px,44px 0,100% 0,100% calc(100% - 6px),44px calc(100% - 6px),40px 100%,22px 100%,18px calc(100% - 6px),0 calc(100% - 6px));
+}
