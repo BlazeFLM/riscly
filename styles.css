@@ -1959,3 +1959,20 @@ dialog h3 {
   .toolbox { grid-template-columns: 90px minmax(0, 1fr); }
   .inspector { grid-column: 1; }
 }
+
+/* Matching top sockets and bottom tabs make instruction order visible. */
+.program-row { margin-bottom: -6px; align-items: flex-start; }
+.instruction {
+  padding-top: 14px;
+  padding-bottom: 20px;
+  border-radius: 4px;
+  clip-path: polygon(0 0,18px 0,22px 6px,40px 6px,44px 0,100% 0,100% calc(100% - 6px),44px calc(100% - 6px),40px 100%,22px 100%,18px calc(100% - 6px),0 calc(100% - 6px));
+}
+.instruction::before,.instruction::after { display: none; }
+.instruction.selected { filter: brightness(1.12); outline: none; }
+.program-row.current .instruction { background-image: linear-gradient(#ffffff25,#ffffff25); }
+.program-row.current::before { top: 18px; }
+.start-block { margin-bottom: -6px; position: relative; z-index: 1; padding-bottom: 18px;
+  clip-path: polygon(0 0,100% 0,100% calc(100% - 6px),44px calc(100% - 6px),40px 100%,22px 100%,18px calc(100% - 6px),0 calc(100% - 6px)); }
+.row-delete { align-self: center; }
+.row-comment { display: none; }

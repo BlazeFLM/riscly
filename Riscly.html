@@ -1136,7 +1136,7 @@
           blocks
             .map(
               (b, index) =>
-                `<div class="program-row ${current === index && !cpu.halted ? "current" : ""}" data-id="${b.id}"><span class="line-num">${String(index + 1).padStart(2, "0")}</span><div class="instruction ${selected === b.id ? "selected" : ""}" style="--block:${colors[catalog[b.op].group]}" draggable="true" tabindex="0" role="group" aria-label="${esc(assembly(b))}"><span class="op">${b.op}</span>${fields(b)}</div><button class="row-delete" title="Remove ${b.op}" aria-label="Remove instruction ${index + 1}">×</button></div>${comment(b, index) ? `<div class="row-comment">${comment(b, index)}</div>` : ""}`,
+                `<div class="program-row ${current === index && !cpu.halted ? "current" : ""}" data-id="${b.id}"><span class="line-num">${String(index + 1).padStart(2, "0")}</span><div class="instruction ${selected === b.id ? "selected" : ""}" style="--block:${colors[catalog[b.op].group]}" draggable="true" tabindex="0" role="group" aria-label="${esc(assembly(b))}"><span class="op">${b.op}</span>${fields(b)}</div><button class="row-delete" title="Remove ${b.op}" aria-label="Remove instruction ${index + 1}">×</button></div>`,
             )
             .join("");
         if (!blocks.length)
@@ -1380,7 +1380,21 @@
         e.dataTransfer.setData("text/plain", row.dataset.id);
         e.dataTransfer.effectAllowed = "move";
       });
+      function dropAnchor(y) {
+        const rows = [...$("#program").querySelectorAll(".program-row")]
+          .filter(row => row.dataset.id !== drag?.id);
+        return rows.find(row => {
+          const rect = row.getBoundingClientRect();
+          return y < rect.top + rect.height / 2;
+        })?.dataset.id ?? null;
+      }
+      function finishDrag() {
+        drag = null;
+        $("#canvas").classList.remove("drag-over");
+        document.querySelectorAll(".dragging").forEach(el => el.classList.remove("dragging"));
+      }
       $("#canvas").addEventListener("dragover", (e) => {
+        if (!drag) return;
         e.preventDefault();
         $("#canvas").classList.add("drag-over");
       });
@@ -1389,31 +1403,24 @@
           $("#canvas").classList.remove("drag-over");
       });
       $("#canvas").addEventListener("drop", (e) => {
-        e.preventDefault();
-        $("#canvas").classList.remove("drag-over");
         if (!drag) return;
-        let target = e.target.closest("[data-id]")?.dataset.id;
-        if (target && target === drag.id) {
-          drag = null;
-          return;
-        }
+        e.preventDefault();
+        const anchor = dropAnchor(e.clientY);
         if (drag.op && blocks.length >= 300) {
-          drag = null;
-          toast("This little lab has room for 300 blocks.");
-          return;
+          finishDrag();
+          return toast("This little lab has room for 300 blocks.");
         }
+        const moving = drag.op ? makeBlock(drag.op) : blocks.find(b => b.id === drag.id);
+        if (!moving) return finishDrag();
         edit(() => {
-          const b = drag.op
-            ? makeBlock(drag.op)
-            : blocks.find((b) => b.id === drag.id);
-          if (!b) return;
-          blocks = blocks.filter((x) => x.id !== b.id);
-          const index = target ? blocks.findIndex((x) => x.id === target) : -1;
-          blocks.splice(index < 0 ? blocks.length : index, 0, b);
-          selected = b.id;
+          blocks = blocks.filter(b => b.id !== moving.id);
+          const index = anchor ? blocks.findIndex(b => b.id === anchor) : blocks.length;
+          blocks.splice(index < 0 ? blocks.length : index, 0, moving);
+          selected = moving.id;
         });
-        drag = null;
+        finishDrag();
       });
+      document.addEventListener("dragend", finishDrag);
       $$(".workspace-tab").forEach(
         (b) => (b.onclick = () => setView(b.dataset.view)),
       );
