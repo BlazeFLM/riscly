@@ -1033,7 +1033,7 @@
           '<div class="empty">No blocks found. Try “add” or “shift”.</div>';
       }
       function regSelect(b, key) {
-        return `<select aria-label="${key === "rd" ? "Destination" : key === "rs1" ? "First source" : "Second source"} register for ${b.op}" data-key="${key}">${aliases.map((a, i) => `<option value="${i}" ${b[key] === i ? "selected" : ""}>x${i} · ${a}</option>`).join("")}</select>`;
+        return `<select aria-label="${key === "rd" ? "Destination" : key === "rs1" ? "First source" : "Second source"} register for ${b.op}" data-key="${key}">${aliases.map((a, i) => `<option value="${i}" ${b[key] === i ? "selected" : ""}>${a}</option>`).join("")}</select>`;
       }
       function immInput(b) {
         return `<input data-key="imm" aria-label="Immediate value for ${b.op}" value="${esc(b.imm)}" title="Decimal, 0x hexadecimal, or 0b binary">`;
