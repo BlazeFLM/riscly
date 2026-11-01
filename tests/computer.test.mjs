@@ -7,8 +7,8 @@ import { randomUUID } from "node:crypto";
 const html = readFileSync(new URL("../Riscly.html", import.meta.url), "utf8");
 const source = html.match(/<script type="module">([\s\S]*?)<\/script>/)[1];
 const engine = source.slice(0, source.indexOf("const $"));
-const { compile, Computer, makeBlock, catalog } = vm.runInNewContext(
-  engine + ";({compile, Computer, makeBlock, catalog})",
+const { compile, Computer, makeBlock, catalog, groups } = vm.runInNewContext(
+  engine + ";({compile, Computer, makeBlock, catalog, groups})",
   { crypto: { randomUUID } },
 );
 const b = (op, args = {}) => ({ ...makeBlock(op), ...args });
@@ -22,6 +22,17 @@ function run(blocks) {
 
 test("the browser script parses", () => {
   assert.doesNotThrow(() => new vm.Script(source));
+});
+
+test("every instruction remains reachable after removing the starter category", () => {
+  const categories = new Set(groups.map(([id]) => id));
+  assert.ok(!categories.has("starter"));
+  for (const instruction of Object.values(catalog)) {
+    assert.ok(categories.has(instruction.group), `${instruction.op} needs a visible category`);
+  }
+  assert.equal(catalog.li.group, "arithmetic");
+  assert.equal(catalog.mv.group, "memory");
+  assert.equal(catalog.not.group, "logic");
 });
 
 test("all card instructions expand and encode", () => {

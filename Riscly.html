@@ -51,30 +51,21 @@
           </div>
         </div>
         <div class="editor-layout">
-          <aside class="toolbox">
-            <div class="panel-label">
-              BLOCK LIBRARY <span id="block-count">0</span>
+          <aside class="toolbox" aria-label="Instructions">
+            <div class="panel-label instruction-library-title">
+              Instructions <span id="block-count">0</span>
             </div>
-            <label class="search"
-              ><span>⌕</span
-              ><input
-                id="search"
-                placeholder="Find a block…"
-                aria-label="Find an instruction block"
-              /><kbd>/</kbd></label
-            >
-            <div id="categories" class="categories"></div>
-            <div class="toolbox-heading">
-              <span id="category-title">GET STARTED</span
-              ><span class="tiny">CLICK OR DRAG TO ADD</span>
-            </div>
-            <div id="palette" class="palette"></div>
-            <div class="toolbox-tip">
-              <span>✧</span>
-              <div>
-                <b>Little steps, real instructions.</b>
-                <p>Every block becomes real RISC-V assembly.</p>
+            <nav id="categories" class="categories" aria-label="Instruction categories"></nav>
+            <label class="search">
+              <span aria-hidden="true">&#8981;</span>
+              <input id="search" placeholder="Find an instruction…" aria-label="Find an instruction" />
+              <kbd>/</kbd>
+            </label>
+            <div class="instruction-flyout">
+              <div class="toolbox-heading">
+                <span id="category-title">ARITHMETIC</span>
               </div>
+              <div id="palette" class="palette" aria-label="Available instructions"></div>
             </div>
           </aside>
           <div class="workarea">
@@ -105,11 +96,9 @@
               <button id="add-block" class="add-block">
                 ＋ Add your next instruction
               </button>
-              <div class="canvas-watermark">
-                a playground for curious minds <span>✧</span>
-              </div>
             </div>
             <div id="code-view" class="code-view" hidden></div>
+            <div id="status-message" class="execution-feedback" role="status" hidden></div>
             <div class="execution">
               <div class="execution-main">
                 <button class="button primary" id="run">
@@ -213,16 +202,6 @@
             </div>
           </aside>
         </div>
-        <div class="statusbar">
-          <span id="status-message" role="status"
-            ><i></i> All systems curious. Ready when you are.</span
-          >
-          <div>
-            <span id="instruction-total">4 blocks</span
-            ><span>32-bit · Little-endian</span
-            ><button id="ideas">Build ideas</button><button id="shortcuts">Keyboard shortcuts <kbd>?</kbd></button>
-          </div>
-        </div>
       </section>
     </main>
     <dialog id="dialog">
@@ -272,12 +251,11 @@
         "t6",
       ];
       const groups = [
-        ["starter", "Get started", "#7541d9"],
         ["arithmetic", "Arithmetic", "#1970cf"],
         ["logic", "Logic & bits", "#ad32b5"],
         ["memory", "Memory", "#00836c"],
         ["control", "Control flow", "#b85a00"],
-        ["other", "More & labels", "#d33159"],
+        ["other", "Other", "#d33159"],
       ];
       const catalog = {};
       function defs(group, format, rows) {
@@ -285,8 +263,8 @@
           catalog[op] = { op, title, description, group, format, f3, f7 };
       }
       defs("arithmetic", "R", [
-        ["add", "Add", "Add two registers", 0],
-        ["sub", "Subtract", "Subtract the second register", 0, 32],
+        ["add", "Add", "Adds two registers", 0],
+        ["sub", "Subtract", "Subtract the second register from the first ", 0, 32],
         ["slt", "Less than", "Signed comparison → 0 or 1", 2],
         ["sltu", "Less than, unsigned", "Unsigned comparison → 0 or 1", 3],
         ["mul", "Multiply", "Keep the low 32 bits of the product", 0, 1],
@@ -381,10 +359,10 @@
         ],
         ["ebreak", "Debugger break", "Pause for the debugger"],
       ]);
-      defs("starter", "LI", [
+      defs("arithmetic", "LI", [
         ["li", "Put a number", "Put a 32-bit number into a register"],
       ]);
-      defs("starter", "MOVE", [
+      defs("arithmetic", "MOVE", [
         ["mv", "Copy a value", "Copy from one register to another"],
         ["neg", "Negate", "Subtract a value from zero"],
         ["not", "Flip every bit", "Swap every 0 and 1"],
@@ -415,6 +393,8 @@
           "A destination for a branch or jump; no machine instruction",
         ],
       ]);
+      catalog.mv.group = "memory";
+      catalog.not.group = "logic";
       function number(value) {
         let s = String(value).trim();
         if (!/^[+-]?(?:0x[0-9a-f]+|0b[01]+|\d+)$/i.test(s))
@@ -951,7 +931,7 @@
         },
       };
       let blocks = examples.sum.blocks(),
-        category = "starter",
+        category = "arithmetic",
         view = "blocks",
         regBase = 10,
         inspect = "registers",
@@ -1029,12 +1009,11 @@
         $("#categories").innerHTML = groups
           .map(
             ([id, title, c]) =>
-              `<button class="category ${category === id ? "active" : ""}" data-category="${id}" style="--block:${c}"><span class="category-dot"></span>${title}</button>`,
+              `<button class="category ${category === id ? "active" : ""}" data-category="${id}" aria-pressed="${category === id}" style="--block:${c}"><span class="category-dot"></span>${title}</button>`,
           )
           .join("");
         $("#block-count").textContent = Object.keys(catalog).length - 1;
       }
-      const starter = ["li", "add", "addi", "mv", "slli", "label"];
       function renderPalette() {
         let search = $("#search").value.trim().toLowerCase();
         const items = Object.values(catalog).filter((d) =>
@@ -1042,9 +1021,7 @@
             ? (d.op + " " + d.title + " " + d.description)
                 .toLowerCase()
                 .includes(search)
-            : category === "starter"
-              ? starter.includes(d.op)
-              : d.group === category,
+            : d.group === category,
         );
         $("#category-title").textContent = search
           ? "SEARCH RESULTS"
@@ -1053,7 +1030,7 @@
           items
             .map(
               (d) =>
-                `<button class="palette-block" draggable="true" data-op="${d.op}" style="--block:${colors[d.group]}" title="Add ${d.op}: ${esc(d.description)}"><b>${d.op}</b><span>${esc(d.title)}</span><small>${esc(d.description)}</small></button>`,
+                `<button class="palette-block" draggable="true" data-op="${d.op}" style="--block:${colors[d.group]}" title="Add ${d.op}: ${esc(d.description)}"><b>${d.op}</b><span>${esc(d.title)}</span></button>`,
             )
             .join("") ||
           '<div class="empty">No blocks found. Try “add” or “shift”.</div>';
@@ -1167,9 +1144,7 @@
             .join("");
         if (!blocks.length)
           $("#program").innerHTML +=
-            '<div class="empty">Pick a block from the library.<br>Your computer is waiting for an idea.</div>';
-        $("#instruction-total").textContent =
-          `${blocks.filter((b) => b.op !== "label").length} blocks · ${compiled?.code.length ?? "–"} instructions`;
+            '<div class="empty">Choose an instruction from the sidebar.<br>Your computer is waiting for an idea.</div>';
         $("#undo").disabled = !undo.length;
         $("#redo").disabled = !redo.length;
       }
@@ -1242,13 +1217,15 @@
         $("#bin-value").title = `Unsigned decimal: ${explore >>> 0}`;
       }
       function setMessage(s, isError = false) {
-        $("#status-message").innerHTML =
-          `<i style="background:${isError ? "#c77f83" : "#9bb69c"}"></i>${esc(s)}`;
+        const feedback = $("#status-message");
+        feedback.textContent = s;
+        feedback.hidden = !s;
+        feedback.classList.toggle("error", isError);
       }
       function executionMessage() {
         if (error) return setMessage(error, true);
         if (!cpu.last)
-          return setMessage("All systems curious. Ready when you are.");
+          return setMessage("");
         const b = cpu.last;
         if (b.store)
           setMessage(
@@ -1626,7 +1603,7 @@
       }
       function reference() {
         modal(
-          `<h2>Small instructions. Real power.</h2><p>All ${Object.keys(catalog).length - 1} instructions and pseudoinstructions from pages 1–2 of your CS 61C reference card, plus a label block. Registers use x0–x31 and show ABI nicknames. Immediate inputs accept decimal, 0x hex, and 0b binary.</p><p><strong>Sandbox:</strong> RV32I + mul, 4 KiB of separate data memory, aligned loads/stores, and x2 (sp) initially 4096. Code starts at address 0. ECALL and EBREAK pause execution; OS services and self-modifying code are not emulated. Pseudoinstructions use real instruction expansion.</p><table class="reference-table"><thead><tr><th>Instruction</th><th>What it does</th><th>Kind</th><th></th></tr></thead><tbody>${Object.values(
+          `<h2>Small instructions. Real power.</h2><p>All ${Object.keys(catalog).length - 1} instructions and pseudoinstructions from pages 1–2 of your CS 61C reference card, plus a label block. Registers use x0–x31 and show ABI nicknames. Immediate inputs accept decimal, 0x hex, and 0b binary.</p><p><strong>Sandbox:</strong> RV32I + mul, 4 KiB of separate data memory, aligned loads/stores, and x2 (sp) initially 4096. Code starts at address 0. ECALL and EBREAK pause execution; OS services and self-modifying code are not emulated. Pseudoinstructions use real instruction expansion.</p><table class="reference-table"><thead><tr><th>Instruction</th><th>What it does</th><th>Type</th><th></th></tr></thead><tbody>${Object.values(
             catalog,
           )
             .map(
@@ -1636,11 +1613,6 @@
             .join(
               "",
             )}</tbody></table><p>Source: CS 61C Reference Card v5.0.3. Encoding corrections follow the <a href="https://docs.riscv.org/reference/isa/unpriv/rv32.html" target="_blank" rel="noopener">RISC-V specification ↗</a>: ECALL immediate = 0, EBREAK immediate = 1; JALR clears target bit 0. ASCII, floating-point tables, and pipeline diagrams on pages 3–4 are reference material, not additional instructions.</p>`,
-        );
-      }
-      function ideas() {
-        modal(
-          `<h2>Build understanding, one layer at a time.</h2><p>The next chapter of Riscly: keep the computer visible, and let each new idea unlock something you can make.</p><div class="guide-grid"><div class="guide-card"><b>01 · Light up an 8 × 8 world</b><p>Map memory to a pixel display. A store lights a pixel; bitmasks make sprites. Children can see why bytes and addresses matter.</p></div><div class="guide-card"><b>02 · Predict, then press Step</b><p>Ask which register will change or where a branch will go. Offer hints after a prediction, and let learners replay their reasoning.</p></div><div class="guide-card"><b>03 · Watch data travel</b><p>Animate source registers → ALU → destination. For loads and stores, trace the effective address to a highlighted memory byte.</p></div><div class="guide-card"><b>04 · Graduate from blocks to text</b><p>Keep selection synchronized across blocks, assembly, and instruction fields. Add an editable assembly mode once the block model feels familiar.</p></div><div class="guide-card"><b>05 · Build a call-stack story</b><p>Introduce functions with labeled return tickets. Show ra, sp, saved registers, and stack frames as a function calls another function.</p></div><div class="guide-card"><b>06 · Unlock deeper machinery</b><p>After single-step execution, introduce instruction fields, ASCII, floating point, then the single-cycle and pipelined datapaths from the card.</p></div></div><h3>Visualize cause and effect</h3><p>Keep three linked views: the block being executed, its assembly/encoding, and the state it changes. Use persistent colors for instruction families, highlight changed values, and leave a short execution trail. Introduce only a few instructions at first; reveal advanced instructions as learners need them.</p><p>A compact instruction set is a useful teaching surface. It does not make addresses, two’s complement, or debugging automatically easy, and learning low-level first does not guarantee stronger coding. Test the lesson sequence with children and adjust to what they can explain and build.</p>`,
         );
       }
       $("#dialog-content").onclick = (e) => {
@@ -1667,16 +1639,16 @@
               });
           }),
       );
-      $("#ideas").onclick = ideas;
       $("#help").onclick = lessons;
       $("#computer-help").onclick = () =>
         modal(
           "<h2>Nothing up this computer’s sleeve.</h2><p>Registers are 32-bit storage boxes. x0 always reads zero. The program counter is the byte address of the next instruction. Each real instruction is four bytes; a pseudoinstruction may generate more than one.</p><h3>One value, three representations</h3><p>DEC shows signed two’s complement. HEX and BIN show the same underlying 32 bits. For example, −1 = 0xFFFFFFFF = thirty-two 1 bits. The bit explorer is a separate scratchpad when you flip a bit; it does not secretly change a program register.</p><h3>A small, visible sandbox</h3><p>Data memory has 4096 bytes and starts at zero. The stack pointer begins just above it. Memory is little-endian: the least significant byte goes at the lowest address. Code and data are separate in this learning sandbox.</p><h3>Time travel</h3><p>Use Step to run a real instruction, ↶ to restore the previous register and memory state, or ↺ to restart. Editing blocks resets the computer. Run pauses after 1000 steps so accidental loops remain manageable.</p>",
         );
-      $("#shortcuts").onclick = () =>
+      function showShortcuts() {
         modal(
           "<h2>A few little shortcuts.</h2><p><kbd>Space</kbd> Step through one real instruction<br><kbd>Ctrl/Cmd + Z</kbd> Undo a block change<br><kbd>Ctrl/Cmd + Shift + Z</kbd> Redo a block change<br><kbd>/</kbd> Search the block library<br><kbd>?</kbd> Open this guide<br><kbd>Escape</kbd> Close the guide</p><p>You can also click or drag blocks from the library, and drag existing blocks to change their order.</p>",
         );
+      }
       document.addEventListener("keydown", (e) => {
         if (
           ["INPUT", "SELECT", "TEXTAREA"].includes(e.target.tagName) ||
@@ -1689,7 +1661,7 @@
         } else if (e.key === "/") {
           e.preventDefault();
           $("#search").focus();
-        } else if (e.key === "?") $("#shortcuts").click();
+        } else if (e.key === "?") showShortcuts();
         else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
           e.preventDefault();
           $(e.shiftKey ? "#redo" : "#undo").click();
@@ -1710,8 +1682,6 @@
           "computer-help": "Learn how the program counter, registers, memory, and bit explorer work.",
           "add-block": "Search the library, then click or drag an instruction into your program.",
           "close-dialog": "Close this guide (Escape).",
-          ideas: "Explore ideas for what to build and learn next.",
-          shortcuts: "Show the keyboard shortcuts for stepping, searching, undo, and redo.",
         };
         const pages = {
           playground: "Return to the block editor.",
