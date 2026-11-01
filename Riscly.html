@@ -1191,7 +1191,7 @@
         if (!exploreCustom) explore = cpu.regs[selectedReg];
         renderBits();
       }
-      function renderBits() {
+      function renderBits(activeId = null) {
         $("#bit-register").innerHTML = exploreCustom
           ? "sandbox <span>value</span>"
           : `x${selectedReg} <span>${aliases[selectedReg]}</span>`;
@@ -1204,9 +1204,9 @@
               `<button class="bit ${n === "1" ? "on" : ""}" data-bit="${31 - j}" title="Bit ${31 - j}: ${2 ** (31 - j)}" aria-label="Toggle bit ${31 - j}, currently ${n}">${n}</button>`,
           )
           .join("");
-        $("#dec-value").value = String(explore | 0);
-        $("#hex-value").value = hex(explore);
-        $("#bin-value").value = (explore >>> 0)
+        if (activeId !== "dec-value") $("#dec-value").value = String(explore | 0);
+        if (activeId !== "hex-value") $("#hex-value").value = hex(explore);
+        if (activeId !== "bin-value") $("#bin-value").value = (explore >>> 0)
           .toString(2)
           .padStart(32, "0")
           .match(/.{4}/g)
@@ -1592,30 +1592,40 @@
         exploreCustom = true;
         renderBits();
       };
-      for (const id of ["dec-value", "hex-value"])
-        $("#" + id).onchange = (e) => {
-          try {
-            explore = number(e.target.value) | 0;
-            exploreCustom = true;
-            renderBits();
-          } catch (err) {
-            toast(err.message);
-            renderBits();
-          }
-        };
-      $("#bin-value").onchange = (e) => {
-        try {
-          let s = e.target.value.replace(/\s/g, "").replace(/^0b/i, "");
-          if (!/^[01]{1,32}$/.test(s))
-            throw Error("Binary values contain 1–32 bits, each a 0 or 1.");
-          explore = number("0b" + s) | 0;
-          exploreCustom = true;
-          renderBits();
-        } catch (err) {
-          toast(err.message);
-          renderBits();
+      let explorerValid = true;
+      function parseExplorer(id, raw) {
+        let text = raw.trim();
+        if (id === "bin-value") {
+          text = text.replace(/\s/g, "").replace(/^0b/i, "");
+          if (!/^[01]{1,32}$/.test(text)) throw Error("Use 1–32 binary digits.");
+          text = "0b" + text;
+        } else if (id === "hex-value") {
+          text = text.replace(/^0x/i, "");
+          if (!/^[0-9a-f]{1,8}$/i.test(text)) throw Error("Use 1–8 hexadecimal digits.");
+          text = "0x" + text;
         }
-      };
+        return number(text) | 0;
+      }
+      for (const id of ["dec-value", "hex-value", "bin-value"]) {
+        const input = $("#" + id);
+        input.addEventListener("input", () => {
+          try {
+            const value = parseExplorer(id, input.value);
+            explorerValid = true;
+            for (const field of ["dec-value", "hex-value", "bin-value"]) {
+              $("#" + field).setCustomValidity("");
+              $("#" + field).removeAttribute("aria-invalid");
+            }
+            explore = value;
+            exploreCustom = true;
+            renderBits(id);
+          } catch (error) {
+            explorerValid = false;
+            input.setCustomValidity(error.message);
+            input.setAttribute("aria-invalid", "true");
+          }
+        });
+      }
       function modal(html) {
         $("#dialog-content").innerHTML = html;
         $("#dialog").showModal();
